@@ -1,0 +1,49 @@
+metadata:
+  name: drill
+projects:
+  - name: expore-apache-drill
+    source:
+      location: 'https://github.com/legionx-com/expore-apache-drill.git'
+      type: git
+      branch: master
+components:
+  - mountSources: true
+    endpoints:
+      - name: UI
+        port: 8047
+        attributes:
+          secure: 'true'
+          cookiesAuthEnabled: 'true'
+    command:
+      - /bin/sh
+      - '-c'
+    args:
+      - tail -f /dev/null
+    memoryLimit: 1512Mi
+    type: dockerimage
+    alias: drill
+    image: apache/drill
+  - memoryLimit: 256Mi
+    type: dockerimage
+    alias: zookeeper
+    image: zookeeper
+apiVersion: 1.0.0
+commands:
+  - name: drill-embedded
+    actions:
+      - workdir: /opt/drill
+        type: exec
+        command: /opt/drill/bin/drill-embedded
+        component: drill
+  - name: start drillbit
+    actions:
+      - workdir: /opt/drill
+        type: exec
+        command: /opt/drill/bin/drillbit.sh start
+        component: drill
+  - name: stop drillbit
+    actions:
+      - workdir: /opt/drill
+        type: exec
+        command: /opt/drill/bin/drillbit.sh stop
+        component: drill
