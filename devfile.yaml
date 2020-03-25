@@ -1,9 +1,9 @@
 metadata:
   name: drill
 projects:
-  - name: expore-apache-drill
+  - name: explore-apache-drill
     source:
-      location: 'https://github.com/legionx-com/expore-apache-drill.git'
+      location: 'https://github.com/legionx-com/explore-apache-drill.git'
       type: git
       branch: master
 components:
